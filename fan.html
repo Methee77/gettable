@@ -2,8 +2,15 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>Romantic Delivery - MM Couple</title>
+    <title>Together Forever - Special Gift</title>
     <style>
+        :root {
+            --skin: #ffdbac;
+            --shirt-1: #2c3e50;
+            --shirt-2: #e67e22;
+            --pants: #34495e;
+        }
+
         body {
             margin: 0;
             height: 100vh;
@@ -11,187 +18,290 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, #fff5f8 0%, #ffe0e9 100%);
+            background: #fdfdfd;
             font-family: 'Kanit', sans-serif;
-            overflow: hidden;
         }
 
-        #garden {
+        /* พื้นที่แสดงผล */
+        #display-area {
             position: relative;
             width: 100%;
-            max-width: 900px;
-            height: 450px;
-            border-bottom: 4px solid #8bc34a;
+            max-width: 800px;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #ffffff 80%, #f0f0f0 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
         }
 
-        /* ตัวละคร SVG */
-        .character {
+        /* ตัวละครคน */
+        .person {
             position: absolute;
-            bottom: 0;
-            width: 120px;
-            height: 180px;
+            bottom: 60px;
+            width: 80px;
+            height: 200px;
         }
 
         #giver {
-            left: 50px;
-            transition: left 4s cubic-bezier(0.45, 0, 0.55, 1);
-            z-index: 10;
+            left: -100px; /* เริ่มนอกจอ */
+            z-index: 2;
         }
 
         #receiver {
-            right: 100px;
+            right: 150px;
+            z-index: 1;
         }
 
-        /* แอนิเมชั่นการเดิน */
-        @keyframes walkCycle {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
+        /* ส่วนหัวและใบหน้า */
+        .head {
+            width: 50px;
+            height: 55px;
+            background: var(--skin);
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1);
         }
 
-        @keyframes bobbing {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        .walking .leg { animation: walkCycle 0.6s infinite ease-in-out; transform-origin: top; }
-        .walking .body-group { animation: bobbing 0.6s infinite ease-in-out; }
-
-        /* ดอกไม้ */
-        #flower {
+        .hair {
             position: absolute;
-            right: -10px;
-            top: 90px;
-            font-size: 35px;
-            opacity: 0;
-            transition: opacity 0.5s;
-            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
+            top: -5px;
+            width: 54px;
+            left: -2px;
+            height: 25px;
+            background: #222;
+            border-radius: 20px 20px 5px 5px;
         }
 
-        /* กล่องข้อความ */
-        #speech-bubble {
+        .face-details {
             position: absolute;
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            bottom: 200px;
-            right: 80px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            top: 25px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
         }
 
-        #speech-bubble::after {
-            content: '';
+        .eye {
+            width: 5px;
+            height: 6px;
+            background: #333;
+            border-radius: 50%;
+        }
+
+        .mouth {
             position: absolute;
-            bottom: -10px;
-            right: 30px;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid white;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 15px;
+            height: 5px;
+            border-bottom: 2px solid #c0392b;
+            border-radius: 50%;
         }
 
-        button {
-            margin-top: 40px;
-            padding: 15px 40px;
-            font-size: 22px;
-            background: #ff4d6d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        /* ลำตัวและแขนขา */
+        .torso {
+            width: 45px;
+            height: 70px;
+            background: var(--shirt-1);
+            margin: -2px auto 0;
+            border-radius: 10px 10px 5px 5px;
+            position: relative;
         }
 
-        button:hover { transform: scale(1.05); background: #ff758f; }
+        .arm {
+            position: absolute;
+            width: 12px;
+            height: 45px;
+            background: var(--shirt-1);
+            top: 5px;
+            border-radius: 10px;
+            transform-origin: top center;
+        }
 
+        .arm.right { right: -8px; background: var(--skin); height: 50px; }
+        .arm.left { left: -8px; }
+
+        .leg {
+            position: absolute;
+            bottom: -55px;
+            width: 16px;
+            height: 60px;
+            background: var(--pants);
+            border-radius: 0 0 5px 5px;
+            transform-origin: top center;
+        }
+
+        .leg.left { left: 5px; }
+        .leg.right { right: 5px; }
+
+        /* แอนิเมชั่นเดิน */
+        .walking .leg.left { animation: legMove 0.8s infinite alternate; }
+        .walking .leg.right { animation: legMove 0.8s infinite alternate-reverse; }
+        .walking .arm.left { animation: armMove 0.8s infinite alternate; }
+        .walking .head { animation: headBob 0.4s infinite alternate; }
+
+        @keyframes legMove {
+            from { transform: rotate(-25deg); }
+            to { transform: rotate(25deg); }
+        }
+
+        @keyframes armMove {
+            from { transform: rotate(20deg); }
+            to { transform: rotate(-20deg); }
+        }
+
+        @keyframes headBob {
+            from { transform: translateY(0); }
+            to { transform: translateY(-4px); }
+        }
+
+        /* ดอกไม้กุหลาบ */
+        .rose {
+            position: absolute;
+            right: -15px;
+            top: 30px;
+            font-size: 30px;
+            transform: rotate(10deg);
+            display: none;
+        }
+
+        /* เอฟเฟกต์หัวใจ */
         .heart {
             position: absolute;
+            color: #ff4757;
+            font-size: 20px;
             pointer-events: none;
-            animation: heartFloat 2s forwards;
+            animation: heartFly 2s linear forwards;
         }
 
-        @keyframes heartFloat {
-            0% { transform: translateY(0) scale(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+        @keyframes heartFly {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
+            100% { transform: translate(var(--tx), -150px) scale(1.5); opacity: 0; }
+        }
+
+        /* ปุ่มกด */
+        #action-btn {
+            margin-top: 40px;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        #action-btn:hover {
+            background: #1a252f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        #final-msg {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            font-size: 2rem;
+            color: #2c3e50;
+            font-weight: bold;
+            opacity: 0;
+            transition: 1s;
         }
     </style>
 </head>
 <body>
 
-    <div id="garden">
-        <div id="giver" class="character">
-            <div id="flower">🌹</div>
-            <svg viewBox="0 0 100 150" class="body-group">
-                <rect class="leg" x="35" y="110" width="12" height="40" fill="#2c3e50" rx="5"/>
-                <rect class="leg" x="53" y="110" width="12" height="40" fill="#2c3e50" rx="5" style="animation-delay: -0.3s !important;"/>
-                <rect x="30" y="60" width="40" height="55" fill="#3498db" rx="10"/>
-                <circle cx="50" y="35" r="25" fill="#ffdbac"/>
-                <path d="M25 35 Q25 10 50 10 Q75 10 75 35" fill="#4b3621"/> <circle cx="42" y="35" r="2" fill="#333"/> <circle cx="58" y="35" r="2" fill="#333"/> <path d="M45 45 Q50 50 55 45" stroke="#e74c3c" fill="none" stroke-width="2" stroke-linecap="round"/> </svg>
+    <div id="final-msg">มีความสุขมากๆ นะครับ! ❤️</div>
+
+    <div id="display-area">
+        <div id="giver" class="person">
+            <div class="head">
+                <div class="hair"></div>
+                <div class="face-details">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                </div>
+                <div class="mouth"></div>
+            </div>
+            <div class="torso">
+                <div class="arm left"></div>
+                <div class="arm right">
+                    <div class="rose" id="rose">🌹</div>
+                </div>
+            </div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
         </div>
 
-        <div id="receiver" class="character">
-            <div id="speech-bubble">ขอบคุณนะค้าบ รักที่สุดเลย! ❤️</div>
-            <svg viewBox="0 0 100 150">
-                <rect x="35" y="110" width="12" height="40" fill="#2c3e50" rx="5"/>
-                <rect x="53" y="110" width="12" height="40" fill="#2c3e50" rx="5"/>
-                <rect x="30" y="60" width="40" height="55" fill="#f06292" rx="10"/>
-                <circle cx="50" y="35" r="25" fill="#ffdbac"/>
-                <path d="M25 35 Q25 15 50 15 Q75 15 75 35" fill="#2c3e50"/> <circle cx="42" y="35" r="2" fill="#333"/>
-                <circle cx="58" y="35" r="2" fill="#333"/>
-                <path id="receiver-mouth" d="M45 45 Q50 45 55 45" stroke="#e74c3c" fill="none" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+        <div id="receiver" class="person">
+            <div class="head">
+                <div class="hair" style="background: #5d4037;"></div>
+                <div class="face-details">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                </div>
+                <div class="mouth" id="r-mouth"></div>
+            </div>
+            <div class="torso" style="background: var(--shirt-2);">
+                <div class="arm left" style="background: var(--shirt-2);"></div>
+                <div class="arm right" style="background: var(--shirt-2);"></div>
+            </div>
+            <div class="leg left"></div>
+            <div class="leg right"></div>
         </div>
     </div>
 
-    <button onclick="deliverLove()">ส่งดอกไม้ให้แฟน</button>
+    <button id="action-btn" onclick="startStory()">เซอร์ไพรส์แฟน</button>
 
     <script>
-        function deliverLove() {
+        function startStory() {
             const giver = document.getElementById('giver');
-            const flower = document.getElementById('flower');
-            const bubble = document.getElementById('speech-bubble');
-            const mouth = document.getElementById('receiver-mouth');
-            const btn = document.querySelector('button');
+            const rose = document.getElementById('rose');
+            const rMouth = document.getElementById('r-mouth');
+            const msg = document.getElementById('final-msg');
+            const btn = document.getElementById('action-btn');
 
-            btn.disabled = true;
-            btn.style.opacity = '0.5';
+            btn.style.display = 'none';
             
-            // 1. ถือดอกไม้ออกมา
-            flower.style.opacity = '1';
-            
-            // 2. เริ่มเดิน
-            setTimeout(() => {
-                giver.classList.add('walking');
-                giver.style.left = 'calc(100% - 250px)';
-            }, 500);
+            // 1. ถือดอกไม้และเริ่มเดินเข้าจอ
+            rose.style.display = 'block';
+            giver.classList.add('walking');
+            giver.style.transition = 'left 5s linear';
+            giver.style.left = '450px';
 
-            // 3. ถึงที่หมาย
+            // 2. เมื่อเดินไปถึง
             setTimeout(() => {
                 giver.classList.remove('walking');
-                // เปลี่ยนปากผู้รับเป็นยิ้ม
-                mouth.setAttribute('d', 'M45 45 Q50 52 55 45');
-                // แสดงคำพูด
-                bubble.style.opacity = '1';
-                bubble.style.transform = 'scale(1)';
                 
-                startHearts();
-            }, 4500);
+                // เปลี่ยนเป็นหน้ายิ้มทั้งคู่
+                document.querySelector('#giver .mouth').style.height = '8px';
+                rMouth.style.height = '10px';
+                rMouth.style.borderBottom = '3px solid #e74c3c';
+                
+                // แสดงข้อความและหัวใจ
+                msg.style.opacity = '1';
+                createHearts();
+            }, 5000);
         }
 
-        function startHearts() {
-            for(let i=0; i<30; i++) {
+        function createHearts() {
+            const area = document.getElementById('display-area');
+            for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
-                    const h = document.createElement('div');
-                    h.innerHTML = ['❤️','💖','✨','🌹'][Math.floor(Math.random()*4)];
-                    h.className = 'heart';
-                    h.style.left = (60 + Math.random() * 20) + '%';
-                    h.style.top = (40 + Math.random() * 20) + '%';
-                    h.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                    document.body.appendChild(h);
-                    setTimeout(() => h.remove(), 2000);
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.className = 'heart';
+                    heart.style.left = '550px';
+                    heart.style.bottom = '200px';
+                    heart.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+                    area.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 2000);
                 }, i * 150);
             }
         }
