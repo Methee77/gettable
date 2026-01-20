@@ -2,8 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boy Love Delivery 🏳️‍🌈</title>
+    <title>Boy Love Flower Delivery</title>
     <style>
         body {
             margin: 0;
@@ -12,110 +11,97 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, #e0f2ff 0%, #fff5f8 100%);
+            background-color: #f0f2f5;
             font-family: 'Kanit', sans-serif;
             overflow: hidden;
         }
 
-        h1 {
-            color: #4a90e2;
-            text-shadow: 2px 2px #fff;
-        }
-
-        #scene {
+        /* พื้นที่แสดงแอนิเมชั่น */
+        #stage {
             position: relative;
-            width: 90%;
-            max-width: 600px;
-            height: 300px;
-            background: white;
-            border-bottom: 8px solid #8bc34a; /* พื้นหญ้า */
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            background: transparent; /* ไม่มีพื้นหลัง */
+            border-bottom: 2px solid #ccc;
         }
 
-        /* ตัวละครผู้ชาย (คนเดิน) */
-        #boy-walker {
+        /* สไตล์ตัวละคร (ใช้ CSS วาดเป็นตัวคนมินิมอล) */
+        .character {
             position: absolute;
-            bottom: 10px;
-            left: 20px;
-            font-size: 60px;
-            transition: left 3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            bottom: 0;
+            width: 60px;
+            height: 120px;
+        }
+
+        /* ตัวคนเดิน (Boy 1) */
+        #boy1 {
+            left: 50px;
+            transition: left 4s linear;
             z-index: 2;
         }
 
+        /* ตัวคนรอ (Boy 2) */
+        #boy2 {
+            right: 100px;
+            z-index: 1;
+        }
+
+        /* ส่วนประกอบร่างกาย */
+        .head { width: 40px; height: 40px; background: #ffdbac; border-radius: 50%; margin: 0 auto; position: relative; }
+        .body { width: 45px; height: 50px; background: #3498db; border-radius: 10px; margin: -5px auto 0; position: relative; }
+        .leg { width: 12px; height: 35px; background: #2c3e50; position: absolute; bottom: -30px; border-radius: 5px; }
+        .leg-left { left: 8px; }
+        .leg-right { right: 8px; }
+
         /* ดอกไม้ */
-        .flower {
+        .flower-hand {
             position: absolute;
-            font-size: 30px;
             right: -10px;
-            top: 10px;
+            top: 20px;
+            font-size: 25px;
             display: none;
-            transform: rotate(15deg);
+            transform: rotate(20deg);
         }
 
-        /* ตัวละครแฟน (คนรอ) */
-        #boy-waiting {
-            position: absolute;
-            bottom: 10px;
-            right: 40px;
-            font-size: 60px;
+        /* แอนิเมชั่นการเดิน */
+        @keyframes walk {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
         }
 
-        /* ข้อความ */
+        .walking .leg-left { animation: walk 0.5s infinite; transform-origin: top; }
+        .walking .leg-right { animation: walk 0.5s infinite reverse; transform-origin: top; }
+
+        /* ข้อความและปุ่ม */
         #message {
             margin-top: 30px;
-            font-size: 26px;
-            color: #5d5d5d;
+            font-size: 28px;
+            color: #e91e63;
             font-weight: bold;
-            text-align: center;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
+            text-align: center;
         }
 
-        #message.show {
-            opacity: 1;
-            transform: translateY(0);
-            color: #ff477e;
-        }
-
-        /* ปุ่มกด */
         button {
-            margin-top: 25px;
-            padding: 15px 35px;
+            margin-top: 20px;
+            padding: 15px 30px;
             font-size: 20px;
-            background: #4a90e2;
+            background: #e91e63;
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 30px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        button:hover {
-            background: #357abd;
-            transform: scale(1.05);
-        }
-
-        /* อนิเมชั่นเดิน (โยกไปมา) */
-        @keyframes walk {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg) translateY(-5px); }
-        }
-
-        .walking {
-            animation: walk 0.5s infinite;
-        }
-
-        /* หัวใจลอย */
-        .heart {
+        .heart-pop {
             position: absolute;
-            pointer-events: none;
-            animation: floatUp 2s ease-out forwards;
+            font-size: 24px;
+            animation: flyUp 1.5s ease-out forwards;
         }
 
-        @keyframes floatUp {
+        @keyframes flyUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
             100% { transform: translateY(-150px) scale(2); opacity: 0; }
         }
@@ -123,61 +109,59 @@
 </head>
 <body>
 
-    <h1>For My Special Someone 👬✨</h1>
-
-    <div id="scene">
-        <div id="boy-walker">
-            👦
-            <div class="flower" id="flower">🌻</div>
+    <div id="stage">
+        <div id="boy1" class="character">
+            <div class="head"></div>
+            <div class="body">
+                <div id="flower" class="flower-hand">🌹</div>
+            </div>
+            <div class="leg leg-left"></div>
+            <div class="leg leg-right"></div>
         </div>
-        
-        <div id="boy-waiting">🙋‍♂️</div>
+
+        <div id="boy2" class="character">
+            <div class="head"></div>
+            <div class="body" style="background: #f06292;"></div>
+            <div class="leg"></div>
+            <div class="leg" style="right:8px;"></div>
+        </div>
     </div>
 
-    <div id="message">ขอบคุณที่อยู่ข้างกันนะ... รักนะครับ 💖</div>
-
-    <button onclick="startLoveStory()">พาเขาไปมอบดอกไม้</button>
+    <div id="message">ให้ดอกไม้นะครับคนดี! 💖</div>
+    <button onclick="startWalking()">เดินไปให้ดอกไม้แฟน</button>
 
     <script>
-        function startLoveStory() {
-            const walker = document.getElementById('boy-walker');
+        function startWalking() {
+            const boy1 = document.getElementById('boy1');
             const flower = document.getElementById('flower');
             const message = document.getElementById('message');
             const btn = document.querySelector('button');
 
-            // เริ่มเดิน
             btn.style.display = 'none'; // ซ่อนปุ่ม
-            flower.style.display = 'block';
-            walker.classList.add('walking');
+            flower.style.display = 'block'; // ถือดอกไม้
+            boy1.classList.add('walking'); // เริ่มท่าเดิน
             
-            // ขยับตำแหน่งไปยังแฟน
-            walker.style.left = 'calc(100% - 160px)';
+            // สั่งให้เดินไปหา
+            boy1.style.left = 'calc(100% - 200px)';
 
+            // เมื่อเดินไปถึง (4 วินาทีตาม CSS)
             setTimeout(() => {
-                // เมื่อถึงที่หมาย
-                walker.classList.remove('walking');
-                message.classList.add('show');
-                
-                // เปลี่ยนอิโมจิแฟนให้ดีใจ
-                document.getElementById('boy-waiting').innerHTML = '👨‍❤️‍👨';
-                
-                createHearts();
-            }, 3000);
+                boy1.classList.remove('walking'); // หยุดเดิน
+                message.style.opacity = '1';
+                spawnHearts();
+            }, 4000);
         }
 
-        function createHearts() {
-            const symbols = ['❤️', '💖', '✨', '🌈', '💙'];
+        function spawnHearts() {
             for(let i=0; i<20; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
-                    heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-                    heart.className = 'heart';
-                    heart.style.left = (Math.random() * 80 + 10) + 'vw';
-                    heart.style.top = (Math.random() * 50 + 20) + 'vh';
-                    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    heart.innerHTML = '❤️';
+                    heart.className = 'heart-pop';
+                    heart.style.left = (Math.random() * 80 + 10) + '%';
+                    heart.style.top = '50%';
                     document.body.appendChild(heart);
-                    
-                    setTimeout(() => heart.remove(), 2000);
+                    setTimeout(() => heart.remove(), 1500);
                 }, i * 150);
             }
         }
