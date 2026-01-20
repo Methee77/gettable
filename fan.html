@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Love Delivery</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffeef8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        #scene {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            border-bottom: 5px solid #555;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* หุ่นยนต์ */
+        #robot {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            width: 60px;
+            transition: left 3s ease-in-out;
+        }
+
+        .robot-body {
+            width: 50px;
+            height: 50px;
+            background: #4a90e2;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .robot-head {
+            width: 30px;
+            height: 25px;
+            background: #34495e;
+            border-radius: 5px;
+            margin: 0 auto 5px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .eye {
+            width: 6px;
+            height: 6px;
+            background: #00fbff;
+            border-radius: 50%;
+            box-shadow: 0 0 5px #00fbff;
+        }
+
+        /* ดอกไม้ในมือหุ่นยนต์ */
+        .flower {
+            position: absolute;
+            right: -15px;
+            top: 10px;
+            font-size: 24px;
+            display: none;
+        }
+
+        /* แฟน (เป้าหมาย) */
+        #partner {
+            position: absolute;
+            bottom: 10px;
+            right: 40px;
+            font-size: 50px;
+        }
+
+        /* ข้อความบอกรัก */
+        #message {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #d63384;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+        }
+
+        button:hover {
+            background-color: #ff758f;
+        }
+
+        /* เอฟเฟกต์หัวใจลอย */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            animation: float 2s linear forwards;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Robot Love Delivery 🤖💖</h1>
+
+    <div id="scene">
+        <div id="robot">
+            <div class="robot-head">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+            <div class="robot-body">
+                <div class="flower" id="flower">🌹</div>
+            </div>
+        </div>
+        
+        <div id="partner">👸</div>
+    </div>
+
+    <div id="message">เอาดอกไม้มาให้ครับ! รักนะ จุ๊บๆ! 💖</div>
+
+    <button onclick="deliverFlower()">ส่งหุ่นยนต์ไปให้ดอกไม้</button>
+
+    <script>
+        function deliverFlower() {
+            const robot = document.getElementById('robot');
+            const flower = document.getElementById('flower');
+            const message = document.getElementById('message');
+            const btn = document.querySelector('button');
+
+            // เริ่มกระบวนการ
+            btn.disabled = true;
+            flower.style.display = 'block';
+            
+            // หุ่นยนต์เดินไปหาแฟน
+            robot.style.left = 'calc(100% - 150px)';
+
+            setTimeout(() => {
+                // เมื่อถึงที่หมาย
+                message.style.opacity = '1';
+                createHearts();
+            }, 3000);
+        }
+
+        function createHearts() {
+            for(let i=0; i<15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.className = 'heart';
+                    heart.style.left = (Math.random() * 100) + 'vw';
+                    heart.style.top = (Math.random() * 100) + 'vh';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 2000);
+                }, i * 200);
+            }
+        }
+    </script>
+</body>
+</html>
