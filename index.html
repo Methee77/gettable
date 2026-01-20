@@ -2,35 +2,105 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>My IP Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ขอโทษนะครับคนดี</title>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f2f5; }
-        .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
-        h1 { color: #1a73e8; font-size: 2.5rem; margin-bottom: 10px; }
-        p { color: #555; }
+        body {
+            background-color: #ffe5ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Kanit', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10;
+            max-width: 80%;
+        }
+
+        h1 { color: #ff4d6d; margin-bottom: 10px; }
+        p { color: #555; line-height: 1.6; }
+
+        .heart {
+            font-size: 50px;
+            animation: beat 0.8s infinite;
+            display: inline-block;
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-group { margin-top: 20px; }
+        
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #forgiveBtn { background-color: #ff4d6d; color: white; }
+        #forgiveBtn:hover { background-color: #ff758f; transform: scale(1.1); }
+
+        /* หัวใจลอยๆ พื้นหลัง */
+        .bg-heart {
+            position: absolute;
+            color: #ffb3c1;
+            opacity: 0.5;
+            animation: float 5s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <p>ที่อยู่ IP ของคุณคือ:</p>
-    <h1 id="ip">กำลังโหลด...</h1>
-    <p id="details">กำลังดึงข้อมูลตำแหน่ง...</p>
-</div>
+    <div class="container">
+        <div class="heart">❤️</div>
+        <h1>ขอโทษนะค้าบคนดี</h1>
+        <p>เค้าขอโทษที่ทำให้เสียความรู้สึก... <br>
+           รู้ตัวว่าผิดไปแล้วจริงๆ ไม่อยากให้เราเป็นแบบนี้เลย <br>
+           คืนดีกับเค้านะครับ เดี๋ยวพาไปกินของอร่อยๆ ทุกอย่างที่อยากกินเลย!</p>
+        
+        <div class="btn-group">
+            <button id="forgiveBtn" onclick="celebrate()">หายงอนนะ (กดตรงนี้)</button>
+        </div>
+    </div>
 
-<script>
-    fetch('https://ipapi.co/json/')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('ip').textContent = data.ip;
-            document.getElementById('details').textContent = 
-                `${data.city}, ${data.region}, ${data.country_name} | ISP: ${data.org}`;
-        })
-        .catch(error => {
-            document.getElementById('ip').textContent = "เกิดข้อผิดพลาด";
-            console.error('Error:', error);
-        });
-</script>
+    <script>
+        // สร้างหัวใจลอยๆ
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.duration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
 
+        function celebrate() {
+            alert("เย้! ขอบคุณนะครับที่ให้อภัย รักที่สุดเลย ❤️");
+            window.location.href = "https://line.me/ti/p/your-id"; // ใส่ลิงก์ Line คุณตรงนี้เพื่อให้เค้าทักกลับมา
+        }
+    </script>
 </body>
 </html>
