@@ -2,152 +2,243 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>เค้าขอโทษ... ดีกันนะ ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดีกันนะ...เค้าขอโทษ ❤️</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap');
+
         body {
             margin: 0;
-            height: 100vh;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #fff0f3;
-            font-family: 'Tahoma', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #fff5f7 0%, #ffe3ec 100%);
+            font-family: 'Kanit', sans-serif;
             overflow: hidden;
         }
 
-        .stage {
+        .canvas {
             position: relative;
-            width: 600px;
-            height: 300px;
-            border-bottom: 5px solid #d8bfd8;
+            width: 800px;
+            height: 400px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.1);
+            border: 8px solid #fff;
         }
 
-        /* โครงสร้างตัวละคร */
-        .character {
+        /* พื้นหญ้าด้านล่าง */
+        .ground {
             position: absolute;
             bottom: 0;
-            width: 60px;
-            height: 100px;
+            width: 100%;
+            height: 80px;
+            background: #f8f9fa;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
+        /* ข้อความหลัก */
+        .main-text {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 500;
+            color: #ff4d6d;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInText 1s 6.5s forwards;
+        }
+
+        /* ตัวละคร */
+        .character {
+            position: absolute;
+            bottom: 75px;
+            width: 60px;
+            height: 120px;
+        }
+
+        /* แฟน (ยืนรอขวา) */
+        .fan { right: 100px; }
+
+        /* ตัวเรา (เดินจากซ้าย) */
+        .me {
+            left: 50px;
+            animation: walkToFan 6s forwards linear;
+        }
+
+        /* วาดส่วนประกอบคน */
         .head {
             position: absolute;
             top: 0;
-            left: 15px;
-            width: 30px;
-            height: 30px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
             background: #ffdbac;
             border-radius: 50%;
+            z-index: 5;
         }
-
-        .body {
+        
+        /* ผม */
+        .hair {
             position: absolute;
-            top: 30px;
-            left: 15px;
-            width: 30px;
-            height: 40px;
-            background: #3498db;
-            border-radius: 5px;
+            top: -2px;
+            left: 8px;
+            width: 44px;
+            height: 20px;
+            background: #4a3728;
+            border-radius: 20px 20px 0 0;
         }
 
-        .leg {
-            position: absolute;
-            bottom: 0;
-            width: 10px;
-            height: 30px;
-            background: #2c3e50;
-        }
-
-        .leg.left { left: 15px; }
-        .leg.right { left: 35px; }
-
-        /* แฟน (ยืนรอ) */
-        .fan { right: 50px; }
-        .fan .body { background: #2ecc71; }
-
-        /* เรา (คนเดิน) */
-        .me {
-            left: 0;
-            animation: moveForward 7s forwards linear;
-        }
-
-        /* แอนิเมชันขาเดิน */
-        .me .leg.left { animation: walk 0.5s infinite alternate; }
-        .me .leg.right { animation: walk 0.5s infinite alternate-reverse; }
-
-        .flower {
+        .body-shirt {
             position: absolute;
             top: 40px;
-            right: -15px;
-            font-size: 20px;
-            transform: rotate(20deg);
+            left: 5px;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px 10px 5px 5px;
         }
 
-        /* หัวใจ */
-        .heart {
+        .me .body-shirt { background: #74c0fc; } /* เสื้อฟ้า */
+        .fan .body-shirt { background: #b2f2bb; } /* เสื้อเขียว */
+
+        /* แขน */
+        .arm {
             position: absolute;
-            right: 120px;
-            bottom: 120px;
+            top: 45px;
+            width: 12px;
+            height: 35px;
+            background: #ffdbac;
+            border-radius: 10px;
+        }
+        
+        .me .arm.right {
+            right: -8px;
+            transform: rotate(-30deg);
+            z-index: 6;
+        }
+
+        /* ดอกไม้ */
+        .flower {
+            position: absolute;
+            top: 65px;
+            right: -25px;
+            font-size: 24px;
+            transform: rotate(15deg);
+        }
+
+        /* ขาและแอนิเมชันเดิน */
+        .leg {
+            position: absolute;
+            bottom: -30px;
+            width: 16px;
+            height: 35px;
+            background: #495057;
+            border-radius: 0 0 5px 5px;
+        }
+        .leg.left { left: 10px; }
+        .leg.right { left: 34px; }
+
+        /* แอนิเมชันเดินสลับขา */
+        .me .leg.left { animation: legMove 0.5s infinite alternate; }
+        .me .leg.right { animation: legMove 0.5s infinite alternate-reverse; }
+        .me { animation: walkToFan 6s forwards linear, bob 0.5s infinite; }
+
+        /* หัวใจเด้ง */
+        .heart-bubble {
+            position: absolute;
+            right: 130px;
+            bottom: 200px;
             font-size: 50px;
             opacity: 0;
-            animation: heartPop 1s 7s forwards;
+            transform: scale(0);
+            animation: heartPop 1s 6s forwards;
         }
 
-        .message {
+        /* ปุ่มกดหลังเดินจบ */
+        .action-btn {
             position: absolute;
-            top: -50px;
-            width: 100%;
-            text-align: center;
-            color: #ff4d6d;
-            font-size: 24px;
-            font-weight: bold;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 30px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
             opacity: 0;
             animation: fadeIn 1s 7.5s forwards;
+            font-family: 'Kanit', sans-serif;
+            transition: 0.3s;
         }
+
+        .action-btn:hover { background: #ff758f; transform: translateX(-50%) scale(1.05); }
 
         /* Keyframes */
-        @keyframes moveForward {
-            from { left: 0; }
-            to { left: 420px; }
+        @keyframes walkToFan {
+            to { left: 580px; }
         }
 
-        @keyframes walk {
-            from { height: 30px; transform: translateY(0); }
-            to { height: 20px; transform: translateY(-10px); }
+        @keyframes legMove {
+            from { transform: rotate(25deg); }
+            to { transform: rotate(-25deg); }
+        }
+
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         @keyframes heartPop {
             0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1.2); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInText {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeIn {
             to { opacity: 1; }
         }
+
     </style>
 </head>
 <body>
 
-    <div class="stage">
-        <div class="message">ดีกันนะ... เค้าเอาดอกไม้มาง้อแล้วครับ ❤️</div>
+    <div class="canvas">
+        <div class="main-text">เค้าขอโทษนะคนดี... ดีกันนะ ❤️</div>
         
+        <div class="ground"></div>
+
         <div class="character me">
+            <div class="hair"></div>
             <div class="head"></div>
-            <div class="body">
+            <div class="body-shirt">
+                <div class="arm right"></div>
                 <div class="flower">🌷</div>
             </div>
             <div class="leg left"></div>
             <div class="leg right"></div>
         </div>
 
-        <div class="heart">💖</div>
+        <div class="heart-bubble">💖</div>
 
         <div class="character fan">
+            <div class="hair"></div>
             <div class="head"></div>
-            <div class="body"></div>
+            <div class="body-shirt"></div>
             <div class="leg left"></div>
             <div class="leg right"></div>
         </div>
+
+        <button class="action-btn" onclick="alert('ขอบคุณนะครับที่ให้อภัย เค้าจะทำตัวให้ดีขึ้นนะ!')">หายงอนเค้านะ</button>
     </div>
 
 </body>
