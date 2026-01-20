@@ -33,7 +33,8 @@
             font-size: 26px;
             color: #333;
             opacity: 0;
-            animation: fadeInText 1s 6.5s forwards;
+            /* ปรับเวลาแสดงข้อความให้เร็วขึ้นตามการเดิน */
+            animation: fadeInText 1s 3.5s forwards;
         }
 
         .ground-line {
@@ -52,7 +53,11 @@
             height: 120px;
         }
 
-        .me { left: 50px; animation: walkTo 6s forwards linear, bob 0.5s infinite; }
+        /* ปรับเวลาเดินเป็น 3s (จากเดิม 6s) */
+        .me { 
+            left: 50px; 
+            animation: walkTo 3s forwards linear, bob 0.25s infinite; 
+        }
         .fan { right: 120px; }
 
         /* ใบหน้าและทรงผม */
@@ -115,7 +120,7 @@
             top: 55px;
             right: -25px;
             font-size: 24px;
-            animation: sway 1s infinite;
+            animation: sway 0.8s infinite;
         }
 
         /* ขา */
@@ -130,9 +135,9 @@
         .leg.l { left: 12px; }
         .leg.r { left: 34px; }
 
-        /* แอนิเมชัน */
-        .me .leg.l { animation: swing 0.5s infinite alternate; }
-        .me .leg.r { animation: swing 0.5s infinite alternate-reverse; }
+        /* ปรับความเร็วแอนิเมชันขาให้ไวขึ้นเพื่อให้สัมพันธ์กับการเดิน */
+        .me .leg.l { animation: swing 0.25s infinite alternate; }
+        .me .leg.r { animation: swing 0.25s infinite alternate-reverse; }
 
         @keyframes walkTo { to { left: 560px; } }
         @keyframes swing { from { transform: rotate(25deg); } to { transform: rotate(-25deg); } }
@@ -145,34 +150,18 @@
             bottom: 220px;
             font-size: 45px;
             opacity: 0;
-            animation: pop 0.8s 6.2s forwards;
-        }
-
-        .btn {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 25px;
-            background: #ff4d6d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            opacity: 0;
-            animation: fadeIn 1s 7.5s forwards;
-            transition: 0.3s;
+            /* ปรับเวลาหัวใจเด้งให้เร็วขึ้น (รอหลังเดินจบ 3s) */
+            animation: pop 0.8s 3.2s forwards;
         }
 
         @keyframes pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1.2); opacity: 1; } }
         @keyframes fadeInText { to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="message">ธีขอโทษ เค้ารักแฟนนะะ<333</div>
+        <div class="message">ธีขอโทษ เค้ารักแฟนนะะ <333</div>
         <div class="ground-line"></div>
 
         <div class="char me">
@@ -202,7 +191,6 @@
             <div class="leg l"></div>
             <div class="leg r"></div>
         </div>
-
     </div>
 
 </body>
