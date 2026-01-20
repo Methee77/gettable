@@ -2,24 +2,32 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>เค้าขอโทษนะ... หายงอนเถอะ ❤️</title>
+    <title>For You ❤️</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
         body {
             margin: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0faff;
+            background-color: #fff0f3;
             font-family: 'Kanit', sans-serif;
             overflow: hidden;
         }
 
-        .scene {
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .stage {
             position: relative;
-            width: 600px;
-            height: 200px;
-            border-bottom: 3px solid #666;
+            height: 250px;
+            border-bottom: 4px solid #e0aaff;
+            margin-bottom: 30px;
             display: flex;
             align-items: flex-end;
         }
@@ -28,98 +36,111 @@
         .fan {
             position: absolute;
             right: 50px;
-            bottom: 0;
+            bottom: 5px;
             font-size: 80px;
         }
 
-        /* ตัวเราที่เดินถือดอกไม้ */
+        /* ตัวเราที่เดิน */
         .me {
             position: absolute;
             left: 0;
-            bottom: 0;
+            bottom: 5px;
             font-size: 80px;
-            animation: walk 5s forwards;
             display: flex;
-            flex-direction: row-reverse;
+            align-items: center;
+            animation: moveForward 6s forwards ease-in-out;
         }
 
         .flower {
             font-size: 40px;
-            position: relative;
-            right: -10px;
-            top: 20px;
+            margin-left: -20px;
+            margin-bottom: -20px;
+            animation: sway 1s infinite ease-in-out;
         }
 
-        /* หัวใจที่จะเด้งขึ้นมา */
-        .heart-popup {
-            position: absolute;
-            right: 120px;
-            bottom: 120px;
-            font-size: 50px;
-            opacity: 0;
-            animation: popHeart 1s 5s forwards;
+        /* แอนิเมชันขยับตัวเหมือนเดิน */
+        .person-icon {
+            display: inline-block;
+            animation: walkBounce 0.5s infinite alternate;
         }
 
         /* ข้อความง้อ */
-        .message {
-            position: absolute;
-            top: -100px;
-            width: 100%;
-            text-align: center;
-            font-size: 24px;
-            color: #ff4d6d;
+        .message-box {
             opacity: 0;
-            animation: showText 1s 5.5s forwards;
+            transform: translateY(20px);
+            animation: fadeIn 1s 6.5s forwards;
         }
 
-        /* แอนิเมชันการเดิน */
-        @keyframes walk {
-            0% { left: 0; transform: translateY(0); }
-            20% { transform: translateY(-10px); }
-            40% { transform: translateY(0); }
-            60% { transform: translateY(-10px); }
-            80% { transform: translateY(0); }
-            100% { left: 380px; }
+        h1 { color: #ff4d6d; text-shadow: 2px 2px #fff; }
+
+        /* หัวใจเด้ง */
+        .heart-pop {
+            position: absolute;
+            right: 120px;
+            bottom: 150px;
+            font-size: 60px;
+            opacity: 0;
+            animation: popUp 1s 6s forwards;
         }
 
-        @keyframes popHeart {
+        /* Animations */
+        @keyframes moveForward {
+            0% { left: 0; }
+            100% { left: 350px; }
+        }
+
+        @keyframes walkBounce {
+            from { transform: translateY(0) rotate(-2deg); }
+            to { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        @keyframes popUp {
             0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.5); opacity: 1; }
+            70% { transform: scale(1.5); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        @keyframes showText {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes fadeIn {
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .ground {
-            position: absolute;
-            bottom: -40px;
-            width: 100%;
-            text-align: center;
-            color: #888;
-            font-size: 14px;
+        .btn-retry {
+            padding: 10px 20px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="scene">
-        <div class="message">
-            <b>ดีกันนะคนดี... เค้าเอาดอกไม้มาง้อแล้วครับ ❤️</b>
-        </div>
-        
-        <div class="me">
-            <span>🚶‍♂️</span>
-            <span class="flower">🌷</span>
+    <div class="container">
+        <div class="stage">
+            <div class="me">
+                <div class="person-icon">🚶‍♂️</div>
+                <div class="flower">🌷</div>
+            </div>
+
+            <div class="heart-pop">💖</div>
+
+            <div class="fan">🧍‍♂️</div>
         </div>
 
-        <div class="heart-popup">💖</div>
-
-        <div class="fan">🧍‍♂️</div>
-        
-        <div class="ground">เดี๋ยวพาไปกินของอร่อยๆ นะครับ</div>
+        <div class="message-box">
+            <h1>เค้าขอโทษ... ดีกันนะครับ ❤️</h1>
+            <p>ยอมเดินเอาดอกไม้มาให้ถึงที่เลยนะ หายงอนเถอะคนดี</p>
+            <button class="btn-retry" onclick="location.reload()">ดูแอนิเมชันอีกรอบ</button>
+        </div>
     </div>
 
 </body>
