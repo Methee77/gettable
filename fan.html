@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robot Love Delivery</title>
+    <title>Boy Love Delivery 🏳️‍🌈</title>
     <style>
         body {
             margin: 0;
@@ -12,169 +12,173 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #ffeef8;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #e0f2ff 0%, #fff5f8 100%);
+            font-family: 'Kanit', sans-serif;
             overflow: hidden;
+        }
+
+        h1 {
+            color: #4a90e2;
+            text-shadow: 2px 2px #fff;
         }
 
         #scene {
             position: relative;
-            width: 100%;
+            width: 90%;
             max-width: 600px;
             height: 300px;
-            border-bottom: 5px solid #555;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-bottom: 8px solid #8bc34a; /* พื้นหญ้า */
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        /* หุ่นยนต์ */
-        #robot {
+        /* ตัวละครผู้ชาย (คนเดิน) */
+        #boy-walker {
             position: absolute;
             bottom: 10px;
             left: 20px;
-            width: 60px;
-            transition: left 3s ease-in-out;
+            font-size: 60px;
+            transition: left 3s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            z-index: 2;
         }
 
-        .robot-body {
-            width: 50px;
-            height: 50px;
-            background: #4a90e2;
-            border-radius: 10px;
-            position: relative;
-        }
-
-        .robot-head {
-            width: 30px;
-            height: 25px;
-            background: #34495e;
-            border-radius: 5px;
-            margin: 0 auto 5px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-
-        .eye {
-            width: 6px;
-            height: 6px;
-            background: #00fbff;
-            border-radius: 50%;
-            box-shadow: 0 0 5px #00fbff;
-        }
-
-        /* ดอกไม้ในมือหุ่นยนต์ */
+        /* ดอกไม้ */
         .flower {
             position: absolute;
-            right: -15px;
+            font-size: 30px;
+            right: -10px;
             top: 10px;
-            font-size: 24px;
             display: none;
+            transform: rotate(15deg);
         }
 
-        /* แฟน (เป้าหมาย) */
-        #partner {
+        /* ตัวละครแฟน (คนรอ) */
+        #boy-waiting {
             position: absolute;
             bottom: 10px;
             right: 40px;
-            font-size: 50px;
+            font-size: 60px;
         }
 
-        /* ข้อความบอกรัก */
+        /* ข้อความ */
         #message {
-            margin-top: 20px;
-            font-size: 24px;
-            color: #d63384;
+            margin-top: 30px;
+            font-size: 26px;
+            color: #5d5d5d;
             font-weight: bold;
+            text-align: center;
             opacity: 0;
-            transition: opacity 1s;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
         }
 
+        #message.show {
+            opacity: 1;
+            transform: translateY(0);
+            color: #ff477e;
+        }
+
+        /* ปุ่มกด */
         button {
-            margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 18px;
-            background-color: #ff4d6d;
+            margin-top: 25px;
+            padding: 15px 35px;
+            font-size: 20px;
+            background: #4a90e2;
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
 
         button:hover {
-            background-color: #ff758f;
+            background: #357abd;
+            transform: scale(1.05);
         }
 
-        /* เอฟเฟกต์หัวใจลอย */
+        /* อนิเมชั่นเดิน (โยกไปมา) */
+        @keyframes walk {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg) translateY(-5px); }
+        }
+
+        .walking {
+            animation: walk 0.5s infinite;
+        }
+
+        /* หัวใจลอย */
         .heart {
             position: absolute;
-            color: #ff4d6d;
-            animation: float 2s linear forwards;
+            pointer-events: none;
+            animation: floatUp 2s ease-out forwards;
         }
 
-        @keyframes float {
+        @keyframes floatUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-150px) scale(2); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Robot Love Delivery 🤖💖</h1>
+    <h1>For My Special Someone 👬✨</h1>
 
     <div id="scene">
-        <div id="robot">
-            <div class="robot-head">
-                <div class="eye"></div>
-                <div class="eye"></div>
-            </div>
-            <div class="robot-body">
-                <div class="flower" id="flower">🌹</div>
-            </div>
+        <div id="boy-walker">
+            👦
+            <div class="flower" id="flower">🌻</div>
         </div>
         
-        <div id="partner">👸</div>
+        <div id="boy-waiting">🙋‍♂️</div>
     </div>
 
-    <div id="message">เอาดอกไม้มาให้ครับ! รักนะ จุ๊บๆ! 💖</div>
+    <div id="message">ขอบคุณที่อยู่ข้างกันนะ... รักนะครับ 💖</div>
 
-    <button onclick="deliverFlower()">ส่งหุ่นยนต์ไปให้ดอกไม้</button>
+    <button onclick="startLoveStory()">พาเขาไปมอบดอกไม้</button>
 
     <script>
-        function deliverFlower() {
-            const robot = document.getElementById('robot');
+        function startLoveStory() {
+            const walker = document.getElementById('boy-walker');
             const flower = document.getElementById('flower');
             const message = document.getElementById('message');
             const btn = document.querySelector('button');
 
-            // เริ่มกระบวนการ
-            btn.disabled = true;
+            // เริ่มเดิน
+            btn.style.display = 'none'; // ซ่อนปุ่ม
             flower.style.display = 'block';
+            walker.classList.add('walking');
             
-            // หุ่นยนต์เดินไปหาแฟน
-            robot.style.left = 'calc(100% - 150px)';
+            // ขยับตำแหน่งไปยังแฟน
+            walker.style.left = 'calc(100% - 160px)';
 
             setTimeout(() => {
                 // เมื่อถึงที่หมาย
-                message.style.opacity = '1';
+                walker.classList.remove('walking');
+                message.classList.add('show');
+                
+                // เปลี่ยนอิโมจิแฟนให้ดีใจ
+                document.getElementById('boy-waiting').innerHTML = '👨‍❤️‍👨';
+                
                 createHearts();
             }, 3000);
         }
 
         function createHearts() {
-            for(let i=0; i<15; i++) {
+            const symbols = ['❤️', '💖', '✨', '🌈', '💙'];
+            for(let i=0; i<20; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
-                    heart.innerHTML = '❤️';
+                    heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
                     heart.className = 'heart';
-                    heart.style.left = (Math.random() * 100) + 'vw';
-                    heart.style.top = (Math.random() * 100) + 'vh';
+                    heart.style.left = (Math.random() * 80 + 10) + 'vw';
+                    heart.style.top = (Math.random() * 50 + 20) + 'vh';
+                    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
                     document.body.appendChild(heart);
                     
                     setTimeout(() => heart.remove(), 2000);
-                }, i * 200);
+                }, i * 150);
             }
         }
     </script>
