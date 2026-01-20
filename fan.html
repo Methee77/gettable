@@ -1,310 +1,200 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <title>Together Forever - Special Gift</title>
-    <style>
-        :root {
-            --skin: #ffdbac;
-            --shirt-1: #2c3e50;
-            --shirt-2: #e67e22;
-            --pants: #34495e;
-        }
+  <meta charset="UTF-8" />
+  <title>Animation คนเดินให้ดอกไม้</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
 
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #fdfdfd;
-            font-family: 'Kanit', sans-serif;
-        }
+    .scene {
+      position: relative;
+      width: 900px;
+      height: 320px;
+    }
 
-        /* พื้นที่แสดงผล */
-        #display-area {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 400px;
-            overflow: hidden;
-            background: linear-gradient(to bottom, #ffffff 80%, #f0f0f0 100%);
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-        }
+    /* คนเดิน (ฝ่ายให้) */
+    .person {
+      position: absolute;
+      left: -140px;
+      bottom: 40px;
+      animation: walk 6s linear forwards;
+    }
 
-        /* ตัวละครคน */
-        .person {
-            position: absolute;
-            bottom: 60px;
-            width: 80px;
-            height: 200px;
-        }
+    .head {
+      width: 50px;
+      height: 50px;
+      background: #f1c27d;
+      border-radius: 50%;
+      margin: auto;
+      position: relative;
+    }
 
-        #giver {
-            left: -100px; /* เริ่มนอกจอ */
-            z-index: 2;
-        }
+    .eye {
+      width: 6px;
+      height: 6px;
+      background: #111;
+      border-radius: 50%;
+      position: absolute;
+      top: 18px;
+    }
 
-        #receiver {
-            right: 150px;
-            z-index: 1;
-        }
+    .eye.left { left: 14px; }
+    .eye.right { right: 14px; }
 
-        /* ส่วนหัวและใบหน้า */
-        .head {
-            width: 50px;
-            height: 55px;
-            background: var(--skin);
-            border-radius: 50% 50% 45% 45%;
-            position: relative;
-            margin: 0 auto;
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.1);
-        }
+    .body {
+      width: 70px;
+      height: 80px;
+      background: #2563eb; /* เสื้อ */
+      border-radius: 10px;
+      margin: 5px auto 0;
+      position: relative;
+    }
 
-        .hair {
-            position: absolute;
-            top: -5px;
-            width: 54px;
-            left: -2px;
-            height: 25px;
-            background: #222;
-            border-radius: 20px 20px 5px 5px;
-        }
+    .arm {
+      width: 40px;
+      height: 10px;
+      background: #f1c27d;
+      position: absolute;
+      top: 20px;
+      transform-origin: left center;
+      animation: armSwing 1s infinite alternate;
+    }
 
-        .face-details {
-            position: absolute;
-            top: 25px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
+    .arm.left { left: -38px; }
+    .arm.right { right: -38px; }
 
-        .eye {
-            width: 5px;
-            height: 6px;
-            background: #333;
-            border-radius: 50%;
-        }
+    .leg {
+      width: 14px;
+      height: 50px;
+      background: #1e293b; /* กางเกง */
+      position: absolute;
+      bottom: -50px;
+      animation: legSwing 1s infinite alternate;
+    }
 
-        .mouth {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 15px;
-            height: 5px;
-            border-bottom: 2px solid #c0392b;
-            border-radius: 50%;
-        }
+    .leg.left { left: 18px; }
+    .leg.right { right: 18px; animation-delay: .5s; }
 
-        /* ลำตัวและแขนขา */
-        .torso {
-            width: 45px;
-            height: 70px;
-            background: var(--shirt-1);
-            margin: -2px auto 0;
-            border-radius: 10px 10px 5px 5px;
-            position: relative;
-        }
+    /* ดอกไม้ */
+    .flower {
+      position: absolute;
+      right: -8px;
+      top: -25px;
+    }
 
-        .arm {
-            position: absolute;
-            width: 12px;
-            height: 45px;
-            background: var(--shirt-1);
-            top: 5px;
-            border-radius: 10px;
-            transform-origin: top center;
-        }
+    .petal {
+      width: 12px;
+      height: 12px;
+      background: #fb7185;
+      border-radius: 50%;
+      position: absolute;
+    }
 
-        .arm.right { right: -8px; background: var(--skin); height: 50px; }
-        .arm.left { left: -8px; }
+    .petal:nth-child(1) { top: 0; left: 12px; }
+    .petal:nth-child(2) { top: 12px; left: 0; }
+    .petal:nth-child(3) { top: 12px; left: 24px; }
+    .petal:nth-child(4) { top: 24px; left: 12px; }
 
-        .leg {
-            position: absolute;
-            bottom: -55px;
-            width: 16px;
-            height: 60px;
-            background: var(--pants);
-            border-radius: 0 0 5px 5px;
-            transform-origin: top center;
-        }
+    .center {
+      width: 10px;
+      height: 10px;
+      background: #fde047;
+      border-radius: 50%;
+      position: absolute;
+      top: 12px;
+      left: 12px;
+    }
 
-        .leg.left { left: 5px; }
-        .leg.right { right: 5px; }
+    /* แฟน (ชาย) */
+    .partner {
+      position: absolute;
+      right: 90px;
+      bottom: 40px;
+      text-align: center;
+      color: white;
+    }
 
-        /* แอนิเมชั่นเดิน */
-        .walking .leg.left { animation: legMove 0.8s infinite alternate; }
-        .walking .leg.right { animation: legMove 0.8s infinite alternate-reverse; }
-        .walking .arm.left { animation: armMove 0.8s infinite alternate; }
-        .walking .head { animation: headBob 0.4s infinite alternate; }
+    .partner .head {
+      background: #f1c27d;
+    }
 
-        @keyframes legMove {
-            from { transform: rotate(-25deg); }
-            to { transform: rotate(25deg); }
-        }
+    .partner .body {
+      background: #16a34a; /* เสื้ออีกสี */
+    }
 
-        @keyframes armMove {
-            from { transform: rotate(20deg); }
-            to { transform: rotate(-20deg); }
-        }
+    .heart {
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 26px;
+      opacity: 0;
+      animation: showHeart 1s ease forwards;
+      animation-delay: 6s;
+    }
 
-        @keyframes headBob {
-            from { transform: translateY(0); }
-            to { transform: translateY(-4px); }
-        }
+    @keyframes walk {
+      to { left: 450px; }
+    }
 
-        /* ดอกไม้กุหลาบ */
-        .rose {
-            position: absolute;
-            right: -15px;
-            top: 30px;
-            font-size: 30px;
-            transform: rotate(10deg);
-            display: none;
-        }
+    @keyframes armSwing {
+      from { transform: rotate(20deg); }
+      to { transform: rotate(-20deg); }
+    }
 
-        /* เอฟเฟกต์หัวใจ */
-        .heart {
-            position: absolute;
-            color: #ff4757;
-            font-size: 20px;
-            pointer-events: none;
-            animation: heartFly 2s linear forwards;
-        }
+    @keyframes legSwing {
+      from { transform: rotate(15deg); }
+      to { transform: rotate(-15deg); }
+    }
 
-        @keyframes heartFly {
-            0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
-            100% { transform: translate(var(--tx), -150px) scale(1.5); opacity: 0; }
-        }
-
-        /* ปุ่มกด */
-        #action-btn {
-            margin-top: 40px;
-            padding: 16px 40px;
-            font-size: 1.2rem;
-            background: #2c3e50;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-
-        #action-btn:hover {
-            background: #1a252f;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        #final-msg {
-            position: absolute;
-            top: 50px;
-            width: 100%;
-            text-align: center;
-            font-size: 2rem;
-            color: #2c3e50;
-            font-weight: bold;
-            opacity: 0;
-            transition: 1s;
-        }
-    </style>
+    @keyframes showHeart {
+      to { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+    }
+  </style>
 </head>
 <body>
-
-    <div id="final-msg">มีความสุขมากๆ นะครับ! ❤️</div>
-
-    <div id="display-area">
-        <div id="giver" class="person">
-            <div class="head">
-                <div class="hair"></div>
-                <div class="face-details">
-                    <div class="eye"></div>
-                    <div class="eye"></div>
-                </div>
-                <div class="mouth"></div>
-            </div>
-            <div class="torso">
-                <div class="arm left"></div>
-                <div class="arm right">
-                    <div class="rose" id="rose">🌹</div>
-                </div>
-            </div>
-            <div class="leg left"></div>
-            <div class="leg right"></div>
+  <div class="scene">
+    <!-- คนเดินให้ดอกไม้ -->
+    <div class="person">
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+      </div>
+      <div class="body">
+        <div class="arm left"></div>
+        <div class="arm right">
+          <div class="flower">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="center"></div>
+          </div>
         </div>
-
-        <div id="receiver" class="person">
-            <div class="head">
-                <div class="hair" style="background: #5d4037;"></div>
-                <div class="face-details">
-                    <div class="eye"></div>
-                    <div class="eye"></div>
-                </div>
-                <div class="mouth" id="r-mouth"></div>
-            </div>
-            <div class="torso" style="background: var(--shirt-2);">
-                <div class="arm left" style="background: var(--shirt-2);"></div>
-                <div class="arm right" style="background: var(--shirt-2);"></div>
-            </div>
-            <div class="leg left"></div>
-            <div class="leg right"></div>
-        </div>
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div>
     </div>
 
-    <button id="action-btn" onclick="startStory()">เซอร์ไพรส์แฟน</button>
-
-    <script>
-        function startStory() {
-            const giver = document.getElementById('giver');
-            const rose = document.getElementById('rose');
-            const rMouth = document.getElementById('r-mouth');
-            const msg = document.getElementById('final-msg');
-            const btn = document.getElementById('action-btn');
-
-            btn.style.display = 'none';
-            
-            // 1. ถือดอกไม้และเริ่มเดินเข้าจอ
-            rose.style.display = 'block';
-            giver.classList.add('walking');
-            giver.style.transition = 'left 5s linear';
-            giver.style.left = '450px';
-
-            // 2. เมื่อเดินไปถึง
-            setTimeout(() => {
-                giver.classList.remove('walking');
-                
-                // เปลี่ยนเป็นหน้ายิ้มทั้งคู่
-                document.querySelector('#giver .mouth').style.height = '8px';
-                rMouth.style.height = '10px';
-                rMouth.style.borderBottom = '3px solid #e74c3c';
-                
-                // แสดงข้อความและหัวใจ
-                msg.style.opacity = '1';
-                createHearts();
-            }, 5000);
-        }
-
-        function createHearts() {
-            const area = document.getElementById('display-area');
-            for (let i = 0; i < 25; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.innerHTML = '❤️';
-                    heart.className = 'heart';
-                    heart.style.left = '550px';
-                    heart.style.bottom = '200px';
-                    heart.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
-                    area.appendChild(heart);
-                    
-                    setTimeout(() => heart.remove(), 2000);
-                }, i * 150);
-            }
-        }
-    </script>
+    <!-- แฟน (ชาย) -->
+    <div class="partner">
+      <div class="heart">❤️</div>
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+      </div>
+      <div class="body"></div>
+      <div style="margin-top:8px;">สำหรับเธอ</div>
+    </div>
+  </div>
 </body>
 </html>
