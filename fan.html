@@ -10,15 +10,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #0f172a, #020617);
+      background: #ffffff; /* พื้นหลังสีขาว */
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: "Segoe UI", Tahoma, sans-serif;
     }
 
     .scene {
       position: relative;
-      width: 900px;
-      height: 320px;
+      width: 1000px;
+      height: 360px;
+      border-bottom: 2px solid #e5e7eb; /* เส้นพื้น */
     }
 
     /* คนเดิน (ฝ่ายให้) */
@@ -143,7 +144,8 @@
     }
 
     @keyframes walk {
-      to { left: 450px; }
+      to { left: 520px; }
+    }
     }
 
     @keyframes armSwing {
