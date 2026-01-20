@@ -2,105 +2,125 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ขอโทษนะครับคนดี</title>
+    <title>เค้าขอโทษนะ... หายงอนเถอะ ❤️</title>
     <style>
         body {
-            background-color: #ffe5ec;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background-color: #f0faff;
             font-family: 'Kanit', sans-serif;
             overflow: hidden;
         }
 
-        .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 10;
-            max-width: 80%;
+        .scene {
+            position: relative;
+            width: 600px;
+            height: 200px;
+            border-bottom: 3px solid #666;
+            display: flex;
+            align-items: flex-end;
         }
 
-        h1 { color: #ff4d6d; margin-bottom: 10px; }
-        p { color: #555; line-height: 1.6; }
-
-        .heart {
-            font-size: 50px;
-            animation: beat 0.8s infinite;
-            display: inline-block;
-        }
-
-        @keyframes beat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .btn-group { margin-top: 20px; }
-        
-        button {
-            padding: 10px 25px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        #forgiveBtn { background-color: #ff4d6d; color: white; }
-        #forgiveBtn:hover { background-color: #ff758f; transform: scale(1.1); }
-
-        /* หัวใจลอยๆ พื้นหลัง */
-        .bg-heart {
+        /* ตัวแฟนที่ยืนรอ */
+        .fan {
             position: absolute;
-            color: #ffb3c1;
-            opacity: 0.5;
-            animation: float 5s linear infinite;
+            right: 50px;
+            bottom: 0;
+            font-size: 80px;
         }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-10vh) rotate(360deg); }
+        /* ตัวเราที่เดินถือดอกไม้ */
+        .me {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            font-size: 80px;
+            animation: walk 5s forwards;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .flower {
+            font-size: 40px;
+            position: relative;
+            right: -10px;
+            top: 20px;
+        }
+
+        /* หัวใจที่จะเด้งขึ้นมา */
+        .heart-popup {
+            position: absolute;
+            right: 120px;
+            bottom: 120px;
+            font-size: 50px;
+            opacity: 0;
+            animation: popHeart 1s 5s forwards;
+        }
+
+        /* ข้อความง้อ */
+        .message {
+            position: absolute;
+            top: -100px;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            color: #ff4d6d;
+            opacity: 0;
+            animation: showText 1s 5.5s forwards;
+        }
+
+        /* แอนิเมชันการเดิน */
+        @keyframes walk {
+            0% { left: 0; transform: translateY(0); }
+            20% { transform: translateY(-10px); }
+            40% { transform: translateY(0); }
+            60% { transform: translateY(-10px); }
+            80% { transform: translateY(0); }
+            100% { left: 380px; }
+        }
+
+        @keyframes popHeart {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes showText {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ground {
+            position: absolute;
+            bottom: -40px;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="heart">❤️</div>
-        <h1>ขอโทษนะค้าบคนดี</h1>
-        <p>เค้าขอโทษที่ทำให้เสียความรู้สึก... <br>
-           รู้ตัวว่าผิดไปแล้วจริงๆ ไม่อยากให้เราเป็นแบบนี้เลย <br>
-           คืนดีกับเค้านะครับ เดี๋ยวพาไปกินของอร่อยๆ ทุกอย่างที่อยากกินเลย!</p>
-        
-        <div class="btn-group">
-            <button id="forgiveBtn" onclick="celebrate()">หายงอนนะ (กดตรงนี้)</button>
+    <div class="scene">
+        <div class="message">
+            <b>ดีกันนะคนดี... เค้าเอาดอกไม้มาง้อแล้วครับ ❤️</b>
         </div>
+        
+        <div class="me">
+            <span>🚶‍♂️</span>
+            <span class="flower">🌷</span>
+        </div>
+
+        <div class="heart-popup">💖</div>
+
+        <div class="fan">🧍‍♂️</div>
+        
+        <div class="ground">เดี๋ยวพาไปกินของอร่อยๆ นะครับ</div>
     </div>
 
-    <script>
-        // สร้างหัวใจลอยๆ
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('bg-heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.duration = Math.random() * 3 + 2 + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }
-        setInterval(createHeart, 300);
-
-        function celebrate() {
-            alert("เย้! ขอบคุณนะครับที่ให้อภัย รักที่สุดเลย ❤️");
-            window.location.href = "https://line.me/ti/p/your-id"; // ใส่ลิงก์ Line คุณตรงนี้เพื่อให้เค้าทักกลับมา
-        }
-    </script>
 </body>
 </html>
